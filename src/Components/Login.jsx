@@ -3,78 +3,66 @@ import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../Context_Api/AppContext";
 
 const Login = () => {
+  const { loginUser } = useContext(AppContext);
 
-    const {loginUser} = useContext(AppContext);
-   
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const [inpval, setInpval] = useState({
-        email: "",
-        password: ""
-    })
+  const [inpval, setInpval] = useState({
+    email: "",
+    password: "",
+  });
 
-    const [data, setData] = useState([]);
-    // console.log(inpval);
+  const [data, setData] = useState([]);
 
-    const getdata = (e) => {
-        // console.log(e.target.value);
+  const getdata = (e) => {
 
+    const { value, name } = e.target;
 
-        const { value, name } = e.target;
-        // console.log(value,name);
+    setInpval(() => {
+      return {
+        ...inpval,
+        [name]: value,
+      };
+    });
+  };
 
+  const addData = (e) => {
+    e.preventDefault();
 
-        setInpval(() => {
-            return {
-                ...inpval,
-                [name]: value
-            }
-        })
+    const getuserArr = localStorage.getItem("userRegister");
+    console.log(getuserArr);
 
-    }
-    
-    const addData = (e) => {
-        e.preventDefault();
+    const { email, password } = inpval;
 
-        const getuserArr = localStorage.getItem("userRegister");
-        console.log(getuserArr);
+    if (email === "") {
+      alert("Please Enter Email");
+    } else if (!email.includes("@")) {
+      alert("Please Enter Valid Email");
+    } else if (password === "") {
+      alert("Please Enter Password");
+    } else if (password.length < 5) {
+      alert("Please Enter Valid Password");
+    } else {
+      if (getuserArr && getuserArr.length) {
+        const userdata = JSON.parse(getuserArr);
+        const userlogin = userdata.filter((el, k) => {
+          console.log(el.email === email && el.password === password);
+          return el.email === email && el.password === password;
+        });
 
-        const { email, password } = inpval;
-
-        if (email === "") {
-          alert("Please Enter Email")
-        } else if (!email.includes("@")) {
-            alert("Please Enter Valid Email")
-
-        } else if (password === "") {
-           alert("Please Enter Password")
-        } else if (password.length < 5) {
-            alert("Please Enter Valid Password")
+        if (userlogin.length === 0) {
+          alert("Create an account");
+          navigate("/signup");
         } else {
+          console.log("user login succesfulyy");
 
-            if (getuserArr && getuserArr.length) {
-                const userdata = JSON.parse(getuserArr);
-                const userlogin = userdata.filter((el, k) => {
-                    console.log(el.email === email && el.password === password)
-                    return el.email === email && el.password === password
-                });
-
-                if (userlogin.length === 0) {
-                    alert("Create an account")
-                    navigate("/signup")
-                } else {
-                    console.log("user login succesfulyy");
-
-                    localStorage.setItem("user_login", JSON.stringify(userlogin))
-                    loginUser();
-                    navigate("/dashboard")
-                }
-            }
+          localStorage.setItem("user_login", JSON.stringify(userlogin));
+          loginUser();
+          navigate("/dashboard");
         }
-
+      }
     }
-
-
+  };
 
   return (
     <div>
@@ -87,7 +75,7 @@ const Login = () => {
                 Email
               </label>
               <input
-               onChange={getdata}
+                onChange={getdata}
                 type="email"
                 id="email"
                 name="email"
@@ -101,7 +89,7 @@ const Login = () => {
                 Password
               </label>
               <input
-               onChange={getdata}
+                onChange={getdata}
                 type="password"
                 id="password"
                 name="password"
@@ -111,7 +99,7 @@ const Login = () => {
               />
             </div>
             <button
-            onClick={addData} 
+              onClick={addData}
               type="submit"
               class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
             >

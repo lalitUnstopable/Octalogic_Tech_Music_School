@@ -10,16 +10,13 @@ function AppContextProvider({ children }) {
 
   const loginUser =() =>{
     setState({
-        // ...state,
         isAuth:true,
     })
 }
 
 const logOutUser =() =>{
     setState({
-        // ...state,
         isAuth:false,
-        // token:null
     })
 }
 
