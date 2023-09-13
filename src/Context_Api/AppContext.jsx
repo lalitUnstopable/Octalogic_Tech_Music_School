@@ -5,7 +5,7 @@ export const AppContext = createContext();
 
 function AppContextProvider({ children }) {
   const [state, setState] = useState({
-    isAuth: true,
+    isAuth: false,
   });
 
   const loginUser =() =>{
