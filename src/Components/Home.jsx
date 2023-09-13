@@ -1,11 +1,11 @@
 import React from 'react'
+import Comp1 from './Comp1'
 
 const Home = () => {
-
-    console.log("Hello")
   return (
-    <div>
-        <h1 class="text-black">Home</h1>
+    <div className='bg-blue'>
+        
+        <Comp1 />
     </div>
   )
 }

@@ -12,8 +12,6 @@ const Login = () => {
     password: "",
   });
 
-  const [data, setData] = useState([]);
-
   const getdata = (e) => {
 
     const { value, name } = e.target;
@@ -30,7 +28,6 @@ const Login = () => {
     e.preventDefault();
 
     const getuserArr = localStorage.getItem("userRegister");
-    console.log(getuserArr);
 
     const { email, password } = inpval;
 
@@ -46,7 +43,7 @@ const Login = () => {
       if (getuserArr && getuserArr.length) {
         const userdata = JSON.parse(getuserArr);
         const userlogin = userdata.filter((el, k) => {
-          console.log(el.email === email && el.password === password);
+          // console.log(el.email === email && el.password === password);
           return el.email === email && el.password === password;
         });
 
@@ -54,11 +51,11 @@ const Login = () => {
           alert("Create an account");
           navigate("/signup");
         } else {
-          console.log("user login succesfulyy");
+          // console.log("user login succesfulyy");
 
           localStorage.setItem("user_login", JSON.stringify(userlogin));
           loginUser();
-          navigate("/dashboard");
+          navigate("/");
         }
       }
     }
@@ -66,7 +63,7 @@ const Login = () => {
 
   return (
     <div>
-      <div class="max-h-screen flex items-center justify-center">
+      <div class="max-h-screen flex items-center justify-center bg-white">
         <div class="p-8 rounded shadow-md w-96">
           <h2 class="text-black text-3xl font-semibold mb-4">Music School</h2>
           <form>

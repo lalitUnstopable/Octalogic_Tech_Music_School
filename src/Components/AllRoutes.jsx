@@ -6,21 +6,16 @@ import NewCourse from "./NewCourse";
 import PrivateRoute from "./PrivateRoute";
 import Home from "./Home";
 import Course from "./Course";
-import Dashboard from "./Dashboard";
 
 const AllRoutes = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
-          }
-        />
+        <Route path="/" element={
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        } />
         <Route path="/course" element={<Course />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
